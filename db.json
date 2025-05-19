@@ -1,0 +1,26 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Product 1",
+            "price": 100,
+            "description": "This is product 1",
+            "category": "Laptop"
+        },
+        {
+            "id": 2,
+            "name": "Product 2",
+            "price": 200,
+            "category": "Laptop",
+            "description": "Description of Product 2"
+        },
+        {
+            "id": 3,
+            "name": "Product 344444",
+            "price": 300,
+            "category": "Smartphone",
+            "description": "Description of Product 3"
+        }
+    ],
+    "users": []
+}
