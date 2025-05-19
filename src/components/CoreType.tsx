@@ -39,12 +39,37 @@ const CoreType = () => {
   const print = (value: unknown) => {
     // Unknown phải check kiểu dữ liệu trước khi sử dụng
     // any thì không cần check
-    if (typeof value === "string" ) {
+    if (typeof value === "string") {
       console.log(value.toLowerCase());
     }
   };
   print("Hello");
 
+  interface IPerson {
+    name: string;
+    age: number;
+    getInfo: () => void;
+  }
+  interface IPerson2 extends IPerson {
+    description: string;
+  }
+
+  type PersonType = {
+    name: string;
+    age: number;
+    getInfo: () => void;
+  }
+
+  // Object
+  const person: IPerson2 = {
+    // key: value
+    name: "John",
+    age: 30,
+    description: "This is a person",
+    getInfo: () => {
+      console.log(`Name: ${person.name}, Age: ${person.age}`);
+    },
+  };
 
   return (
     <>
