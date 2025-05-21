@@ -1,5 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { z } from "zod";
 
 // rule zod
@@ -24,8 +26,24 @@ const FormCreateProduct = () => {
     formState: { errors },
   } = useForm<ProductSchemaType>({ resolver: zodResolver(ProductSchema) });
 
+  const navigate = useNavigate();
+
+  const createProduct = async (product: ProductSchemaType) => {
+    try {
+      const createProductResponse = await axios.post(
+        "http://localhost:3000/products",
+        product
+      );
+      if (createProductResponse.status === 201) {
+        navigate("/products");
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error when creating product");
+    }
+  };
   const onSubmit = (value: ProductSchemaType) => {
-    console.log(value);
+    createProduct(value);
   };
   return (
     <>
@@ -41,8 +59,10 @@ const FormCreateProduct = () => {
               type="text"
               id="name"
               className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2"
-              required
             />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            )}
           </div>
           <div className="mb-5">
             <label htmlFor="price" className="block mb-2">
@@ -53,8 +73,12 @@ const FormCreateProduct = () => {
               type="text"
               id="price"
               className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2"
-              required
             />
+            {errors.price && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.price.message}
+              </p>
+            )}
           </div>
           <div className="mb-5">
             <label htmlFor="Description" className="block mb-2">
@@ -64,7 +88,6 @@ const FormCreateProduct = () => {
               {...register("description")}
               id="Description"
               className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2"
-              required
             />
           </div>
           <div className="mb-5">
@@ -83,6 +106,11 @@ const FormCreateProduct = () => {
               <option value="Laptop">Laptop</option>
               <option value="SmartPhone">SmartPhone</option>
             </select>
+            {errors.category && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.category.message}
+              </p>
+            )}
             <button
               type="submit"
               className="text-white mt-5 bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "

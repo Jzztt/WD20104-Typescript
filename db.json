@@ -1,26 +1,33 @@
 {
-    "products": [
-        {
-            "id": 1,
-            "name": "Product 1",
-            "price": 100,
-            "description": "This is product 1",
-            "category": "Laptop"
-        },
-        {
-            "id": 2,
-            "name": "Product 2",
-            "price": 200,
-            "category": "Laptop",
-            "description": "Description of Product 2"
-        },
-        {
-            "id": 3,
-            "name": "Product 344444",
-            "price": 300,
-            "category": "SmartPhone",
-            "description": "Description of Product 3"
-        }
-    ],
-    "users": []
+  "products": [
+    {
+      "id": 1,
+      "name": "Product 1",
+      "price": 100,
+      "description": "This is product 1",
+      "category": "Laptop"
+    },
+    {
+      "id": 2,
+      "name": "Product 2",
+      "price": 200,
+      "category": "Laptop",
+      "description": "Description of Product 2"
+    },
+    {
+      "id": 3,
+      "name": "Product 344444",
+      "price": 300,
+      "category": "SmartPhone",
+      "description": "Description of Product 3"
+    },
+    {
+      "id": "83cc",
+      "name": "samsung s24 ultra",
+      "price": "555555",
+      "description": "no description",
+      "category": "SmartPhone"
+    }
+  ],
+  "users": []
 }
