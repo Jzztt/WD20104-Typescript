@@ -14,6 +14,12 @@ const ProductSchema = z.object({
   }),
 });
 type ProductSchemaType = z.infer<typeof ProductSchema>;
+interface Product {
+  id: number;
+  name: string;
+  price: string;
+  description: string;
+}
 
 const FormCreateProduct = () => {
   // Chức năng thêm sản phẩm mới

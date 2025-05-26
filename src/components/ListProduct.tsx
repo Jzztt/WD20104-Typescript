@@ -10,6 +10,14 @@ interface IProduct {
 }
 const ListProduct = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
+
+  const handleDelete = async (id: number | string) => {
+    const isConfirm = window.confirm("Are you sure you want to delete this product?");
+    if(!isConfirm) return;
+    axios.delete(`http://localhost:3000/products/${id}`);
+    fetchProduct();
+    // setProducts(products.filter((product) => product.id !== id));
+  };
   const fetchProduct = async () => {
     const fetchProductResponse = await axios.get(
       "http://localhost:3000/products"
@@ -18,7 +26,7 @@ const ListProduct = () => {
   };
   useEffect(() => {
     fetchProduct();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -38,6 +46,9 @@ const ListProduct = () => {
               <th scope="col" className="px-6 py-3">
                 Price
               </th>
+              <th scope="col" className="px-6 py-3">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -55,6 +66,17 @@ const ListProduct = () => {
                 <td className="px-6 py-4"> {product.description}</td>
                 <td className="px-6 py-4"> {product.category}</td>
                 <td className="px-6 py-4"> {product.price}</td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(product.id)}
+                    className="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded mr-2"
+                  >
+                    Delete
+                  </button>
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded">
+                    Update
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
