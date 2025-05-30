@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 interface IProduct {
   id: number;
@@ -73,9 +74,9 @@ const ListProduct = () => {
                   >
                     Delete
                   </button>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded">
+                  <Link to= {`/update-product/${product.id}`} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded">
                     Update
-                  </button>
+                  </Link>
                 </td>
               </tr>
             ))}

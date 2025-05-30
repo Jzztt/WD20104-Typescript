@@ -1,25 +1,26 @@
 {
   "products": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Product 1",
       "price": 100,
       "description": "This is product 1",
       "category": "Laptop"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Product 2",
       "price": 200,
       "category": "Laptop",
       "description": "Description of Product 2"
+    },
+    {
+      "name": "Product 999999",
+      "price": 300,
+      "description": "Description of Product 3",
+      "category": "SmartPhone",
+      "id": 3
     }
   ],
-  "users": [
-    {
-      "id": "8b50",
-      "email": "admin@gmail.com",
-      "password": "123456"
-    }
-  ]
+  "users": []
 }

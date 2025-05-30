@@ -1,56 +1,43 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { z } from "zod";
+import { useNavigate, useParams } from "react-router";
+import { ProductSchema, type ProductSchemaType } from "../Schemas/Product";
 
-// rule zod
-const ProductSchema = z.object({
-  name: z.string().min(3, { message: "Name is required" }),
-  price: z.string().min(1, { message: "Price is required" }),
-  description: z.string(),
-  category: z.enum(["Laptop", "SmartPhone"], {
-    errorMap: () => ({ message: "Category is required" }),
-  }),
-});
-type ProductSchemaType = z.infer<typeof ProductSchema>;
-interface Product {
-  id: number;
-  name: string;
-  price: string;
-  description: string;
-}
 
-const FormCreateProduct = () => {
-  // Chức năng thêm sản phẩm mới
-  // 1. Tạo một form để nhập thông tin sản phẩm mới => done
-  // 2. Lấy dữ liệu từ form
-  // 3. Gửi dữ liệu đến API để thêm sản phẩm mới
+const FormUpdateProduct = () => {
+  const { id } = useParams();
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ProductSchemaType>({ resolver: zodResolver(ProductSchema) });
+     register,
+     handleSubmit,
+     formState: { errors },
+     setValue,
+   } = useForm<ProductSchemaType>({ resolver: zodResolver(ProductSchema) });
 
-  const navigate = useNavigate();
+   const navigate = useNavigate();
+   const updateProduct = async (product: ProductSchemaType) => {
+    axios.put(`http://localhost:3000/products/${id}`, product);
+    navigate("/products");
+   }
+   const onSubmit = (value: ProductSchemaType) => {
+    updateProduct(value);
+   }
+  const fetchProduct = async () => {
+    const fetchProductResponse = await axios.get(
+      `http://localhost:3000/products/${id}`
+    );
+    const { name, price, description, category} = fetchProductResponse.data;
+    setValue("name", name);
+    setValue("price", price);
+    setValue("description", description);
+    setValue("category", category);
+  };
 
-  const createProduct = async (product: ProductSchemaType) => {
-    try {
-      const createProductResponse = await axios.post(
-        "http://localhost:3000/products",
-        product
-      );
-      if (createProductResponse.status === 201) {
-        navigate("/products");
-      }
-    } catch (error) {
-      console.log(error);
-      throw new Error("Error when creating product");
-    }
-  };
-  const onSubmit = (value: ProductSchemaType) => {
-    createProduct(value);
-  };
+  useEffect(() => {
+    fetchProduct();
+  }, [id]);
+
   return (
     <>
       <div className="w-[500px] mx-auto mt-10">
@@ -130,4 +117,4 @@ const FormCreateProduct = () => {
   );
 };
 
-export default FormCreateProduct;
+export default FormUpdateProduct;
