@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-const Register = () => {
+const Login = () => {
   const {
     register,
     handleSubmit,
@@ -14,33 +14,34 @@ const Register = () => {
   const navigation = useNavigate();
 
   const handleAuth = async (value: AuthSchemaType) => {
-    // axios
-    //   .post("http://localhost:3000/register", data)
-    //   .then((data) => {
-    //     console.log(data);
-    //     navigation("/login");
-    //   })
-    //   .catch((err) => {
-    //     alert(err.response.data);
-    //   });
-
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3000/register",
-        value
-      );
-      if (data) {
+    axios
+      .post("http://localhost:3000/login", value)
+      .then((data) => {
+        console.log(data);
         navigation("/login");
-      }
-    } catch (error) {
-      alert(error);
-    }
+      })
+      .catch((err) => {
+        alert(err.response.data);
+      });
+
+    // try {
+    //   const { data } = await axios.post(
+    //     "http://localhost:3000/login",
+    //     value
+    //   );
+    //   if (data) {
+    //     localStorage.setItem("token", data.accessToken);
+    //     navigation("/products");
+    //   }
+    // } catch (error) {
+    //   alert(error);
+    // }
   };
 
   return (
     <>
       <div className="w-[500px] mx-auto mt-10 shadow-lg p-10 rounded">
-        <h1 className="text-2xl font-bold mb-5 text-center">Register</h1>
+        <h1 className="text-2xl font-bold mb-5 text-center">Login</h1>
         <form action="" onSubmit={handleSubmit(handleAuth)}>
           <div className="mb-5">
             <label htmlFor="name" className="block mb-2">
@@ -83,4 +84,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
